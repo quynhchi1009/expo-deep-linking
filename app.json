@@ -3,6 +3,7 @@
     "name": "expo-deep-linking",
     "slug": "expo-deep-linking",
     "version": "1.0.0",
+    "scheme": "expoDeepLinking",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,6 +26,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f4b6de16-e4ae-4705-a4ec-eb329e1e452c"
+      }
     }
   }
 }
