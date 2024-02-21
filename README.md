@@ -4,3 +4,8 @@ In eas.json I have many different profiles.
 
 Run the command as shown below to run the build for the first profile:
 eas build --profile development --platform ios
+
+Install build app on Esimulator
+
+Run the command as shown below to open the deep link in the standablone app (e.g: it navigates to "user" screen
+npx uri-scheme open expoDeepLinking://user --ios
