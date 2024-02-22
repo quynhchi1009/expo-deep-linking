@@ -1,8 +1,14 @@
 /** @format */
 
+import * as Linking from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Button } from "../components/Button";
+import { ImageViewer } from "../components/ImageViewer";
+
+const PlaceholderImage = require("../assets/images/background-image.png");
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,34 +24,67 @@ export default function App() {
 		}, 10000);
 	}, []);
 
+	const [data, setData] = useState<Linking.ParsedURL>();
+
+	function handleDeepLink(event: { url: string }) {
+		let data = Linking.parse(event.url);
+		setData(data);
+	}
+
+	useEffect(() => {
+		async function getInitialURL() {
+			const getInitialURL = await Linking.getInitialURL();
+			if (getInitialURL) {
+				let parsedUrl = Linking.parse(getInitialURL);
+				setData(parsedUrl);
+			}
+		}
+
+		const subscription = Linking.addEventListener("url", handleDeepLink);
+		Linking.addEventListener("url", handleDeepLink);
+
+		if (!data) {
+			getInitialURL();
+		}
+
+		return () => {
+			subscription.remove();
+		};
+	}, []);
+
 	return (
-		<View style={styles.container}>
-			<View style={styles.main}>
-				<Text style={styles.title}>Hello World</Text>
-				<Text style={styles.subtitle}>This is the first page of your app.</Text>
+		<SafeAreaView style={styles.container}>
+			{/* <Text>
+				{data ? JSON.stringify(data) : "App wasn't opened from deep link!"}
+			</Text> */}
+			<ImageViewer placeholderImageSource={PlaceholderImage} />
+			<View style={styles.footerContainer}>
+				<Button theme='primary' label={"Choose a photo"} />
+				<Button label='Use this photo' />
 			</View>
-		</View>
+			<StatusBar style='auto' />
+		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: "#25292e",
 		alignItems: "center",
-		padding: 24,
-	},
-	main: {
-		flex: 1,
 		justifyContent: "center",
-		maxWidth: 960,
-		marginHorizontal: "auto",
 	},
-	title: {
-		fontSize: 64,
-		fontWeight: "bold",
+	imageContainer: {
+		flex: 1,
+		paddingTop: 58,
 	},
-	subtitle: {
-		fontSize: 36,
-		color: "#38434D",
+	image: {
+		width: 320,
+		height: 440,
+		borderRadius: 18,
+	},
+	footerContainer: {
+		flex: 1 / 3,
+		alignItems: "center",
 	},
 });
