@@ -3,7 +3,8 @@
 import * as Linking from "expo-linking";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Button } from "./components/Button";
 import { ImageViewer } from "./components/ImageViewer";
 
 const PlaceholderImage = require("./assets/images/background-image.png");
@@ -43,6 +44,10 @@ export default function App() {
 				{data ? JSON.stringify(data) : "App wasn't opened from deep link!"}
 			</Text>
 			<ImageViewer placeholderImageSource={PlaceholderImage} />
+			<View style={styles.footerContainer}>
+				<Button label={"Choose a photo"} />
+				<Button label='Use this photo' />
+			</View>
 			<StatusBar style='auto' />
 		</SafeAreaView>
 	);
@@ -64,5 +69,9 @@ const styles = StyleSheet.create({
 		width: 320,
 		height: 440,
 		borderRadius: 18,
+	},
+	footerContainer: {
+		flex: 1 / 3,
+		alignItems: "center",
 	},
 });
