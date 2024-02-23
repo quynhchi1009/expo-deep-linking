@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#25292e"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -35,7 +35,6 @@
       }
     },
     "plugins": [
-      "expo-router"
-    ]
+      "expo-router"    ]
   }
 }

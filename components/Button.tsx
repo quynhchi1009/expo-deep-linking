@@ -14,9 +14,7 @@ export const Button: React.FC<{ label: string; theme?: string }> = ({
 					styles.buttonContainer,
 					{ borderWidth: 4, borderColor: "#ffd33d", borderRadius: 18 },
 				]}>
-				<Pressable
-					style={[styles.button, { backgroundColor: "#fff" }]}
-					onPress={() => alert("You pressed a button.")}>
+				<Pressable style={[styles.button, { backgroundColor: "#fff" }]}>
 					<FontAwesome
 						name='picture-o'
 						size={18}
@@ -33,9 +31,7 @@ export const Button: React.FC<{ label: string; theme?: string }> = ({
 
 	return (
 		<View style={styles.buttonContainer}>
-			<Pressable
-				style={styles.button}
-				onPress={() => alert("You pressed a button.")}>
+			<Pressable style={styles.button}>
 				<Text style={styles.buttonLabel}>{label}</Text>
 			</Pressable>
 		</View>

@@ -1,10 +1,11 @@
 /** @format */
 
 import * as Linking from "expo-linking";
+import { Link } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Button } from "../components/Button";
 import { ImageViewer } from "../components/ImageViewer";
 
@@ -14,6 +15,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
 	const [isReady, setReady] = useState(false);
+	const [data, setData] = useState<Linking.ParsedURL>();
 
 	useEffect(() => {
 		// Perform some sort of async data or asset fetching.
@@ -23,8 +25,6 @@ export default function App() {
 			setReady(true);
 		}, 10000);
 	}, []);
-
-	const [data, setData] = useState<Linking.ParsedURL>();
 
 	function handleDeepLink(event: { url: string }) {
 		let data = Linking.parse(event.url);
@@ -59,8 +59,12 @@ export default function App() {
 			</Text> */}
 			<ImageViewer placeholderImageSource={PlaceholderImage} />
 			<View style={styles.footerContainer}>
-				<Button theme='primary' label={"Choose a photo"} />
-				<Button label='Use this photo' />
+				<Link href='/settings' asChild>
+					<Pressable style={styles.button}>
+						<Text style={styles.buttonLabel}>Settings</Text>
+					</Pressable>
+				</Link>
+				<Button theme='primary' label={"Cancel"} />
 			</View>
 			<StatusBar style='auto' />
 		</SafeAreaView>
@@ -86,5 +90,24 @@ const styles = StyleSheet.create({
 	footerContainer: {
 		flex: 1 / 3,
 		alignItems: "center",
+	},
+	buttonContainer: {
+		width: 320,
+		height: 68,
+		marginHorizontal: 20,
+		alignItems: "center",
+		justifyContent: "center",
+		padding: 3,
+	},
+	button: {
+		borderRadius: 10,
+		height: "100%",
+		alignItems: "center",
+		justifyContent: "center",
+		flexDirection: "row",
+	},
+	buttonLabel: {
+		color: "#fff",
+		fontSize: 16,
 	},
 });
